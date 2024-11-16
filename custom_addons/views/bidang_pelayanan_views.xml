@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!--  form-->
+  <record id="bidang_pelayanan_view_form" model="ir.ui.view">
+    <field name="name">Pelayanan Form</field>
+    <field name="model">bidang.pelayanan</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="nama_bidang_pelayanan" default_focus="1"/>
+              <field name="pelayanan_gembala" widget="boolean_toggle"/>
+              <field name="pelayanan_baptisan" widget="boolean_toggle"/>
+              <field name="pelayanan_penyerahan_anak" widget="boolean_toggle"/>
+              <field name="pelayanan_pernikahan" widget="boolean_toggle"/>
+              <field name="pelayanan_kematian" widget="boolean_toggle"/>
+<!--                <field name="sequence"/>-->
+            </group>
+          </group>
+        </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids"/>
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!--  tree-->
+  <record id="bidang_pelayanan_view_tree" model="ir.ui.view">
+    <field name="name">Pelayanan List</field>
+    <field name="model">bidang.pelayanan</field>
+    <field name="arch" type="xml">
+      <tree delete="1">
+        <field name="nama_bidang_pelayanan"/>
+        <field name="pelayanan_gembala" widget="boolean_checkbox"/>
+        <field name="pelayanan_baptisan" widget="boolean_checkbox"/>
+        <field name="pelayanan_penyerahan_anak" widget="boolean_checkbox"/>
+        <field name="pelayanan_pernikahan" widget="boolean_checkbox"/>
+        <field name="pelayanan_kematian" widget="boolean_checkbox"/>
+<!--        <field name="sequence"/>-->
+      </tree>
+    </field>
+  </record>
+
+  <!--  search-->
+  <record id="bidang_pelayanan_view_search" model="ir.ui.view">
+    <field name="name">Pelayanan Search</field>
+    <field name="model">bidang.pelayanan</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="nama_bidang_pelayanan"/>
+      </search>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!--  action button-->
+  <record id="baptisan_action" model="ir.actions.act_window">
+    <field name="name">Baptisan</field>
+    <field name="res_model">baptisan</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="pengerja_action" model="ir.actions.act_window">
+    <field name="name">Pengerja</field>
+    <field name="res_model">pengerja</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="gereja_action" model="ir.actions.act_window">
+    <field name="name">Gereja</field>
+    <field name="res_model">gereja</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="jemaat_action" model="ir.actions.act_window">
+    <field name="name">Jemaat</field>
+    <field name="res_model">jemaat</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="kkj_action" model="ir.actions.act_window">
+    <field name="name">KKJ</field>
+    <field name="res_model">kartu.keluarga.jemaat</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="penyerahan_anak_action" model="ir.actions.act_window">
+    <field name="name">Penyerahan Anak</field>
+    <field name="res_model">penyerahan.anak</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="akta_nikah_action" model="ir.actions.act_window">
+    <field name="name">Akta Nikah</field>
+    <field name="res_model">akta.nikah</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="bidang_pelayanan_action" model="ir.actions.act_window">
+    <field name="name">Bidang Pelayanan</field>
+    <field name="res_model">bidang.pelayanan</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="master_approval_action" model="ir.actions.act_window">
+    <field name="name">Master Approval</field>
+    <field name="res_model">master.approval</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="provinsi_action" model="ir.actions.act_window">
+    <field name="name">Provinsi</field>
+    <field name="res_model">provinsi</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id="kota_action" model="ir.actions.act_window">
+    <field name="name">Kota</field>
+    <field name="res_model">kota</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!--  menu-->
+<!--  <menuitem name="Pelayanan" id="pelayanan_base_menu" web_icon="pelayanan,static/description/pelayanan.svg"/>-->
+<!--    <menuitem name="Jemaat" id="jemaat_pelayanan_menu" parent="pelayanan_base_menu"/>-->
+<!--      <menuitem name="Baptisan" id="baptisan_menu" parent="jemaat_pelayanan_menu" action="baptisan_action"/>-->
+<!--      <menuitem name="KKJ" id="kkj_menu" parent="jemaat_pelayanan_menu" action="kkj_action"/>-->
+<!--      <menuitem name="Penyerahan Anak" id="penyerahan_anak_menu" parent="jemaat_pelayanan_menu" action="penyerahan_anak_action"/>-->
+<!--      <menuitem name="Akta Nikah" id="akta_nikah_menu" parent="jemaat_pelayanan_menu" action="akta_nikah_action"/>-->
+<!--    <menuitem name="Laporan" id="laporan_pelayanan_menu" parent="pelayanan_base_menu"/>-->
+<!--      <menuitem name="Ibadah Raya" id="ibadah_raya_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>-->
+<!--      <menuitem name="COOL" id="cool_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>-->
+
+
+<!--  <menuitem name="Data" id="data_base_menu" web_icon="data,static/description/data.svg"/>-->
+<!--    <menuitem name="Pendeta" id="pendeta_base_menu" parent="data_base_menu" action="pendeta_action"/>-->
+<!--    <menuitem name="Gereja" id="gereja_base_menu" parent="data_base_menu" action="gereja_action"/>-->
+<!--    <menuitem name="Jemaat" id="jemaat_base_menu" parent="data_base_menu" action="jemaat_action"/>-->
+<!--    <menuitem name="Daerah Administrasi" id="daerah_administrasi_base_menu" parent="data_base_menu"/>-->
+<!--      <menuitem name="Provinsi" id="provinsi_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>-->
+<!--      <menuitem name="Kota" id="kota_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>-->
+<!--      <menuitem name="Kecamatan" id="kecamatan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>-->
+<!--      <menuitem name="Kelurahan" id="kelurahan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>-->
+
+  <menuitem name="GBI Modern Land" id="gbi_base_menu" web_icon="custom_addons,static/description/pelayanan.svg"/>
+    <menuitem name="Data" sequence="1" id="data_base_menu" parent="gbi_base_menu"/>
+      <menuitem name="Pengerja" sequence="3" id="pengerja_base_menu" parent="data_base_menu" action="pengerja_action"/>
+      <menuitem name="Gereja" sequence="1" id="gereja_base_menu" parent="data_base_menu" action="gereja_action"/>
+      <menuitem name="Jemaat" sequence="2" id="jemaat_base_menu" parent="data_base_menu" action="jemaat_action"/>
+      <menuitem name="Bidang Pelayanan" sequence="4" id="bidang_pelayanan_base_menu" parent="data_base_menu" action="bidang_pelayanan_action"/>
+      <menuitem name="Cool" sequence="5" id="cool_base_menu" parent="data_base_menu" action="cool_action"/>
+      <menuitem name="Approval" sequence="6" id="master_approval_base_menu" parent="data_base_menu" action="master_approval_action"/>
+      <menuitem name="Daerah Administrasi" sequence="7" id="daerah_administrasi_base_menu" parent="data_base_menu"/>
+        <menuitem name="Provinsi" sequence="1" id="provinsi_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
+        <menuitem name="Kota" sequence="2" id="kota_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
+        <menuitem name="Kecamatan" sequence="3" id="kecamatan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
+        <menuitem name="Kelurahan" sequence="4" id="kelurahan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
+
+    <menuitem name="Pelayanan" sequence="2" id="pelayanan_base_menu" parent="gbi_base_menu"/>
+      <menuitem name="Jemaat" sequence="1" id="jemaat_pelayanan_menu" parent="pelayanan_base_menu"/>
+        <menuitem name="Baptisan" sequence="1" id="baptisan_menu" parent="jemaat_pelayanan_menu" action="baptisan_action"/>
+        <menuitem name="KKJ" sequence="2" id="kkj_menu" parent="jemaat_pelayanan_menu" action="kkj_action"/>
+        <menuitem name="Penyerahan Anak" sequence="3" id="penyerahan_anak_menu" parent="jemaat_pelayanan_menu" action="penyerahan_anak_action"/>
+        <menuitem name="Akta Nikah" sequence="4" id="akta_nikah_menu" parent="jemaat_pelayanan_menu" action="akta_nikah_action"/>
+      <menuitem name="Laporan" sequence="2" id="laporan_pelayanan_menu" parent="pelayanan_base_menu"/>
+        <menuitem name="Ibadah Raya" sequence="1" id="ibadah_raya_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>
+        <menuitem name="COOL" sequence="2" id="cool_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>
+
+</odoo>

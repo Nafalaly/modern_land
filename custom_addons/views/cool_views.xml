@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!--  form-->
+  <record id="cool_view_form" model="ir.ui.view">
+    <field name="name">Cool Form</field>
+    <field name="model">cool</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button name="action_cancel" class="oe_highlight" groups="custom_addons.group_app_approve" type="object" string="Cancel" attrs="{'invisible': [('state', 'not in', ['not active'])]}" data-hotkey="z"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="name" default_focus="1"/>
+              <field name="name_cooler"/>
+              <field name="jenis_cooler"/>
+              <field name="gereja_id" options="{'no_create': True, 'no_create_edit':True}"/>
+              <field name="currency_id" invisible="1"/>
+              <field name="persembahan" widget="monetary"/>
+            </group>
+            <group>
+              <field name="tanggal_cool"/>
+              <field name="tempat"/>
+              <field name="waktu_start"/>
+              <field name="waktu_end"/>
+              <field name="tema"/>
+            </group>
+          </group>
+          <notebook>
+            <page string = "Anggota">
+              <field name="cool_anggota_line">
+                <tree editable="bottom" string="Anggota">
+                  <control>
+                    <create name="add_anggota" string="Tamba anggota"/>
+                  </control>
+                  <field name="jemaat_id" options="{'no_create_edit': True,'no_create': True}"/>
+                  <field name="tanggal_gabung"/>
+                  <field name="anggota_baru"/>
+                  <field name="state"/>
+                </tree>
+                <form string="Anggota">
+                  <group>
+                    <field name="jemaat_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="tanggal_gabung"/>
+                    <field name="anggota_baru"/>
+                    <field name="state"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+            <page string = "Kubu Doa">
+              <field name="cool_kubu_doa_line">
+                <tree editable="bottom" string="Anggota">
+                  <control>
+                      <create name="add_kubu_doa" string="Tamba kubu doa"/>
+                  </control>
+                  <field name="jemaat_id" options="{'no_create_edit': True,'no_create': True}"/>
+                  <field name="tanggal_gabung"/>
+                  <field name="anggota_baru"/>
+                  <field name="state"/>
+                </tree>
+                <form string="Anggota">
+                  <group>
+                    <field name="jemaat_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="tanggal_gabung"/>
+                    <field name="anggota_baru"/>
+                    <field name="state"/>
+                  </group>
+                </form>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids"/>
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!--  tree-->
+  <record id="cool_view_tree" model="ir.ui.view">
+    <field name="name">Cool List</field>
+    <field name="model">cool</field>
+    <field name="arch" type="xml">
+      <tree delete="1">
+        <field name="name"/>
+      </tree>
+    </field>
+  </record>
+
+  <!--  search-->
+  <record id="cool_view_search" model="ir.ui.view">
+    <field name="name">Cool Search</field>
+    <field name="model">cool</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+      </search>
+    </field>
+  </record>
+
+  <!--  action-->
+  <record id="cool_action" model="ir.actions.act_window">
+      <field name="name">Cool</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">cool</field>
+      <field name="view_mode">tree,form</field>
+  </record>
+</odoo>

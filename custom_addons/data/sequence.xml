@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="app_gereja_sequence" model="ir.sequence">
+            <field name="name">Gereja Sequence Number</field>
+            <field name="code">app.gereja.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">GRJ-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_pengerja_sequence" model="ir.sequence">
+            <field name="name">Pengerja Sequence Number</field>
+            <field name="code">app.pengerja.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">PRJ-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_jemaat_sequence" model="ir.sequence">
+            <field name="name">Jemaat Sequence Number</field>
+            <field name="code">app.jemaat.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">JMT-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_baptisan_sequence" model="ir.sequence">
+            <field name="name">Baptisan Sequence Number</field>
+            <field name="code">app.baptisan.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">BAP-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_kkj_sequence" model="ir.sequence">
+            <field name="name">KKJ Sequence Number</field>
+            <field name="code">app.kkj.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">KKJ-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_penyerahan_anak_sequence" model="ir.sequence">
+            <field name="name">Penyerahan Anak Sequence Number</field>
+            <field name="code">app.peny.anak.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">PNY-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_akta_nikah_sequence" model="ir.sequence">
+            <field name="name">Akta Nikah Sequence Number</field>
+            <field name="code">app.akta.nikah.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">AKT-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+        <record id="app_bidang_pelayanan_sequence" model="ir.sequence">
+            <field name="name">Bidang Pelayanan Sequence Number</field>
+            <field name="code">app.bidang.pelayanan.seq</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="prefix">PEL-%(range_year)s%(month)s%(day)s</field>
+            <field name="use_date_range">True</field>
+        </record>
+    </data>
+</odoo>

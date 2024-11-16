@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!--  form-->
+  <record id="peny_anak_view_form" model="ir.ui.view">
+    <field name="name">Penyerahan Anak Form</field>
+    <field name="model">penyerahan.anak</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button name="approve_penyerahan_anak" class="oe_highlight" groups="custom_addons.group_app_approve" attrs="{'invisible':[('state', '=', 'approved')]}" string="Approve" type="object"/>
+          <button name="redraft_penyerahan_anak" class="oe_highlight" groups="custom_addons.group_app_approve" attrs="{'invisible':[('state', '=', 'draft')]}" string="Re-draft" type="object"/>
+          <button name="action_cancel" class="oe_highlight" groups="custom_addons.group_app_approve" type="object" string="Cancel" attrs="{'invisible': [('state', 'not in', ['draft'])]}" data-hotkey="z"/>
+          <field name="state" widget="statusbar"/>
+        </header>
+        <sheet>
+          <field name="image_1920" widget="image" class="oe_avatar"/>
+          <div class="oe_title">
+              <label for="nomor"/>
+              <h1>
+                  <field name="nomor"/>
+              </h1>
+          </div>
+          <group>
+            <group>
+              <field name="nama_anak" default_focus="1"/>
+              <field name="tempat_lahir"/>
+              <field name="tanggal_lahir"/>
+              <field name="jenis_kelamin"/>
+              <field name="tanggal_penyerahan"/>
+              <field name="nama_pendeta_id" options="{'no_create': True, 'no_create_edit':True}"/>
+            </group>
+            <group>
+              <field name="is_ayah_jemaat"/>
+              <field name="nama_ayah" attrs="{'invisible': [('is_ayah_jemaat', '!=', False)]}"/>
+              <field name="nama_ayah_jemaat_id" options="{'no_create': True, 'no_create_edit':True}" attrs="{'invisible': [('is_ayah_jemaat', '=', False)]}"/>
+              <field name="is_ibu_jemaat"/>
+              <field name="nama_ibu" attrs="{'invisible': [('is_ibu_jemaat', '!=', False)]}"/>
+              <field name="nama_ibu_jemaat_id" options="{'no_create': True, 'no_create_edit':True}" attrs="{'invisible': [('is_ibu_jemaat', '=', False)]}"/>
+            </group>
+          </group>
+        </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids"/>
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!--  tree-->
+  <record id="peny_anak_view_tree" model="ir.ui.view">
+    <field name="name">Penyerahan Anak List</field>
+    <field name="model">penyerahan.anak</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="nomor"/>
+        <field name="nama_anak"/>
+        <field name="tempat_lahir"/>
+        <field name="tanggal_lahir"/>
+        <field name="jenis_kelamin"/>
+        <field name="tanggal_penyerahan"/>
+        <field name="is_ayah_jemaat" invisible="1"/>
+        <field name="is_ibu_jemaat" invisible="1"/>
+        <field name="nama_ayah" attrs="{'invisible': [('is_ayah_jemaat', '!=', False)]}"/>
+        <field name="nama_ayah_jemaat_id" attrs="{'invisible': [('is_ayah_jemaat', '=', False)]}"/>
+        <field name="nama_ibu" attrs="{'invisible': [('is_ibu_jemaat', '!=', False)]}"/>
+        <field name="nama_ibu_jemaat_id" attrs="{'invisible': [('is_ibu_jemaat', '=', False)]}"/>
+      </tree>
+    </field>
+  </record>
+
+  <!--  search-->
+  <record id="peny_anak_view_search" model="ir.ui.view">
+    <field name="name">penyerahan anak Search</field>
+    <field name="model">penyerahan.anak</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="nomor"/>
+        <field name="nama_anak"/>
+        <field name="tempat_lahir"/>
+        <field name="tanggal_lahir"/>
+        <field name="tanggal_penyerahan"/>
+      </search>
+    </field>
+  </record>
+</odoo>
