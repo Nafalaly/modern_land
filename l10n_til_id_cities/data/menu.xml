@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <menuitem name="Cities"
+                id="til_cities_action_menu" action="base_address_extended.action_res_city_tree"
+                sequence="7" parent="contacts.res_partner_menu_config"
+                groups="base.group_system"/>
+</odoo>
