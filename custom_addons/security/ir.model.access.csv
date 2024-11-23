@@ -59,10 +59,6 @@ access_approver_master_approval,custom_addons.master_approval,custom_addons.mode
 access_approver_master_approval_line,custom_addons.master_approval_line,custom_addons.model_master_approval_line,custom_addons.group_app_approve,1,1,1,1
 access_approver_list_approval,custom_addons.list_approval,custom_addons.model_list_approval,custom_addons.group_app_approve,1,1,1,1
 
-access_custom_addons_provinsi,custom_addons.provinsi,model_provinsi,base.group_user,1,1,1,0
-access_custom_addons_kota,custom_addons.kota,model_kota,base.group_user,1,1,1,0
-access_custom_addons_kecamatan,custom_addons.kecamatan,model_kecamatan,base.group_user,1,1,1,0
-access_custom_addons_kelurahan,custom_addons.kelurahan,model_kelurahan,base.group_user,1,1,1,0
 
 access_chruch_operational_schedule_level_1,access_chruch_operational_schedule_r,model_chruch_operational_schedule,custom_addons.group_app_view,1,0,0,0
 access_chruch_operational_schedule_level_2,access_chruch_operational_schedule_rw,model_chruch_operational_schedule,custom_addons.group_app_input,1,1,0,0

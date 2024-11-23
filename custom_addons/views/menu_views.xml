@@ -51,16 +51,7 @@
     <field name="res_model">master.approval</field>
     <field name="view_mode">tree,form</field>
   </record>
-  <record id="provinsi_action" model="ir.actions.act_window">
-    <field name="name">Provinsi</field>
-    <field name="res_model">provinsi</field>
-    <field name="view_mode">tree,form</field>
-  </record>
-  <record id="kota_action" model="ir.actions.act_window">
-    <field name="name">Kota</field>
-    <field name="res_model">kota</field>
-    <field name="view_mode">tree,form</field>
-  </record>
+  <!-- TODO: ADD Menu for Provinsi & Kota -->
 
   <!--  menu-->
 <!--  <menuitem name="Pelayanan" id="pelayanan_base_menu" web_icon="pelayanan,static/description/pelayanan.svg"/>-->
@@ -94,10 +85,7 @@
       <menuitem name="Cool" sequence="6" id="cool_base_menu" parent="data_base_menu" action="cool_action"/>
       <menuitem name="Approval" sequence="7" id="master_approval_base_menu" parent="data_base_menu" action="master_approval_action"/>
       <menuitem name="Daerah Administrasi" sequence="8" id="daerah_administrasi_base_menu" parent="data_base_menu"/>
-        <menuitem name="Provinsi" sequence="1" id="provinsi_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
-        <menuitem name="Kota" sequence="2" id="kota_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
-        <menuitem name="Kecamatan" sequence="3" id="kecamatan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
-        <menuitem name="Kelurahan" sequence="4" id="kelurahan_base_menu" parent="daerah_administrasi_base_menu" action="jemaat_action"/>
+      <!-- TODO: ADD Menu for Address   -->
 
     <menuitem name="Pelayanan" sequence="2" id="pelayanan_base_menu" parent="gbi_base_menu"/>
       <menuitem name="Jemaat" sequence="1" id="jemaat_pelayanan_menu" parent="pelayanan_base_menu"/>
