@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class Pengerja(models.Model):
     _name = 'pengerja'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'data pengerja'
+    _description = 'data pengerja/Gembala'
     _rec_name = 'name_id'
 
     nomor = fields.Char('Nomor', required=True, index=True, readonly=True, default=lambda self: _('New'))

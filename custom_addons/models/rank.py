@@ -1,5 +1,6 @@
 from odoo import models, fields
 
+
 class Rank(models.Model):
     _name = 'rank'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -7,6 +8,7 @@ class Rank(models.Model):
     _rec_name = 'name'
 
     name = fields.Char(strng='Rank Gereja', required=True)
+    # TODO: Additional Info (?)
     main = fields.Boolean(string='Pusat')
     sequence = fields.Integer(string='Sequence')
 
