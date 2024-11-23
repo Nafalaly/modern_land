@@ -53,16 +53,24 @@
   </record>
   <!-- TODO: ADD Menu for Provinsi & Kota -->
 
+  <record id="master_departement_action" model="ir.actions.act_window">
+    <field name="name">Departemen</field>
+    <field name="res_model">operating.unit</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
   <menuitem name="GBI Modern Land" id="gbi_base_menu" web_icon="custom_addons,static/description/pelayanan.svg"/>
     <menuitem name="Data" sequence="1" id="data_base_menu" parent="gbi_base_menu"/>
       <menuitem name="Gereja" sequence="1" id="gereja_base_menu" parent="data_base_menu" action="gereja_action"/>
-      <menuitem name="Ibadah" sequence="2" id="ibadah_base_menu" parent="data_base_menu" action="chruch_activity_type_action"/>
-      <menuitem name="Jemaat" sequence="3" id="jemaat_base_menu" parent="data_base_menu" action="jemaat_action"/>
-      <menuitem name="Pengerja" sequence="4" id="pengerja_base_menu" parent="data_base_menu" action="pengerja_action"/>
-      <menuitem name="Bidang Pelayanan" sequence="5" id="bidang_pelayanan_base_menu" parent="data_base_menu" action="bidang_pelayanan_action"/>
-      <menuitem name="Cool" sequence="6" id="cool_base_menu" parent="data_base_menu" action="cool_action"/>
-      <menuitem name="Approval" sequence="7" id="master_approval_base_menu" parent="data_base_menu" action="master_approval_action"/>
-      <menuitem name="Daerah Administrasi" sequence="8" id="daerah_administrasi_base_menu" parent="data_base_menu"/>
+      <menuitem name="Departement" sequence="2" id="gereja_base_menu" parent="data_base_menu" action="master_departement_action"/>
+      <menuitem name="Ibadah" sequence="3" id="ibadah_base_menu" parent="data_base_menu" action="chruch_activity_type_action"/>
+      <menuitem name="Jemaat" sequence="4" id="jemaat_base_menu" parent="data_base_menu" action="jemaat_action"/>
+      <menuitem name="Pengerja" sequence="5" id="pengerja_base_menu" parent="data_base_menu" action="pengerja_action"/>
+      <menuitem name="Bidang Pelayanan" sequence="6" id="bidang_pelayanan_base_menu" parent="data_base_menu" action="bidang_pelayanan_action"/>
+      <menuitem name="Cool" sequence="7" id="cool_base_menu" parent="data_base_menu" action="cool_action"/>
+      <menuitem name="Approval" sequence="8" id="master_approval_base_menu" parent="data_base_menu" action="master_approval_action"/>
+
+      <menuitem name="Daerah Administrasi" sequence="9" id="daerah_administrasi_base_menu" parent="data_base_menu"/>
       <!-- TODO: ADD Menu for Address   -->
 
     <menuitem name="Pelayanan" sequence="2" id="pelayanan_base_menu" parent="gbi_base_menu"/>

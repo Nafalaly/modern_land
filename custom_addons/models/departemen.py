@@ -1,11 +1,21 @@
 from odoo import models, fields
 
-class Rank(models.Model):
-    _name = 'departemen'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'data departemen'
+
+class Departement(models.Model):
+    """
+    Inherit from Operating.unit
+    """
+    _inherit = ['operating.unit']
+    _description = 'Data Department'
     _rec_name = 'name'
 
-    name = fields.Char(strng='Departemen', required=True)
-    kode = fields.Char(string='Kode Departemen')
-    sequence = fields.Integer(string='Sequence')
+    name = fields.Char(strng='Departemen')
+    code = fields.Char(string='Kode Departemen')
+
+    def _get_default_partner_id(self):
+        """
+        Set default partner_id to Company
+        """
+        return self.env.ref('base.main_partner')
+
+    partner_id = fields.Many2one(default=_get_default_partner_id)

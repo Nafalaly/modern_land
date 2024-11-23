@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ # -*- coding: utf-8 -*-
+  ~ /******************************************************************************
+  ~ * Developed 2024 by Tilabs
+  ~ * All Rights Reserved.
+  ~ *
+  ~ * NOTICE: All information contained herein is, and remains the property of
+  ~ * Tilabs.
+  ~ *
+  ~ * The intellectual and technical concepts contained herein are proprietary to
+  ~ * Tilabs.
+  ~ * Dissemination of this information or reproduction of this material is
+  ~ * strictly forbidden unless prior written permission is obtained from
+  ~ * Tilabs.
+  ~   *****************************************************************************/
+  -->
+
+<odoo>
+    <record id="operating_unit_inherit_form_view" model="ir.ui.view">
+        <field name="name">operating.unit.inherit.form.view</field>
+        <field name="model">operating.unit</field>
+        <field name="mode">primary</field>
+        <field name="priority">8</field>
+        <field name="inherit_id" ref="operating_unit.view_operating_unit_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='partner_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                 <attribute name="string">Nama Departemen</attribute>
+            </xpath>
+            <xpath expr="//field[@name='code']" position="attributes">
+                 <attribute name="string">Kode Departemen</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="operating_unit_inherit_tree_view" model="ir.ui.view">
+        <field name="name">operating.unit.inherit.tree.view</field>
+        <field name="model">operating.unit</field>
+        <field name="mode">primary</field>
+        <field name="priority">8</field>
+        <field name="inherit_id" ref="operating_unit.view_operating_unit_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                 <attribute name="string">Nama Departemen</attribute>
+            </xpath>
+            <xpath expr="//field[@name='code']" position="attributes">
+                 <attribute name="string">Kode Departemen</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

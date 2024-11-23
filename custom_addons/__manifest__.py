@@ -33,6 +33,7 @@
         'views/akta_nikah_views.xml',
         'views/bidang_pelayanan_views.xml',
         'views/chruch_activity_type.xml',
+        'views/operating_unit.xml',
         'views/menu_views.xml',
         'data/sequence.xml',
     ],
