@@ -2,7 +2,6 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_custom_addons_baptisan,custom_addons.baptisan,model_baptisan,base.group_user,1,0,0,0
 access_custom_addons_pengerja,custom_addons.pengerja,model_pengerja,base.group_user,1,0,0,0
 access_custom_addons_gereja,custom_addons.gereja,model_gereja,base.group_user,1,0,0,0
-access_custom_addons_jemaat,custom_addons.jemaat,model_jemaat,base.group_user,1,0,0,0
 access_custom_addons_kartu_keluarga_jemaat,custom_addons.kartu_keluarga_jemaat,model_kartu_keluarga_jemaat,base.group_user,1,0,0,0
 access_custom_addons_kartu_keluarga_jemaat_line,custom_addons.kartu_keluarga_jemaat_line,model_kartu_keluarga_jemaat_line,base.group_user,1,0,0,0
 access_custom_addons_cool,custom_addons.cool,model_cool,base.group_user,1,0,0,0
@@ -15,7 +14,6 @@ access_custom_addons_bidang_pelayanan,custom_addons.bidang_pelayanan,custom_addo
 access_view_baptisan,custom_addons.baptisan,model_baptisan,custom_addons.group_app_view,1,0,0,0
 access_view_pengerja,custom_addons.pengerja,model_pengerja,custom_addons.group_app_view,1,0,0,0
 access_view_gereja,custom_addons.gereja,model_gereja,custom_addons.group_app_view,1,0,0,0
-access_view_jemaat,custom_addons.jemaat,model_jemaat,custom_addons.group_app_view,1,0,0,0
 access_view_kartu_keluarga_jemaat,custom_addons.kartu_keluarga_jemaat,model_kartu_keluarga_jemaat,custom_addons.group_app_view,1,0,0,0
 access_view_kartu_keluarga_jemaat_line,custom_addons.kartu_keluarga_jemaat_line,model_kartu_keluarga_jemaat_line,custom_addons.group_app_view,1,0,0,0
 access_view_cool,custom_addons.cool,model_cool,custom_addons.group_app_view,1,0,0,0
@@ -26,7 +24,6 @@ access_view_bidang_pelayanan,custom_addons.bidang_pelayanan,custom_addons.model_
 access_input_baptisan,custom_addons.baptisan,model_baptisan,custom_addons.group_app_input,1,0,1,0
 access_input_pengerja,custom_addons.pengerja,model_pengerja,custom_addons.group_app_input,1,0,1,0
 access_input_gereja,custom_addons.gereja,model_gereja,custom_addons.group_app_input,1,0,1,0
-access_input_jemaat,custom_addons.jemaat,model_jemaat,custom_addons.group_app_input,1,0,1,0
 access_input_kartu_keluarga_jemaat,custom_addons.kartu_keluarga_jemaat,model_kartu_keluarga_jemaat,custom_addons.group_app_input,1,0,1,0
 access_input_kartu_keluarga_jemaat_line,custom_addons.kartu_keluarga_jemaat_line,model_kartu_keluarga_jemaat_line,custom_addons.group_app_input,1,0,1,0
 access_input_cool,custom_addons.cool,model_cool,custom_addons.group_app_input,1,0,1,0
@@ -37,7 +34,6 @@ access_input_bidang_pelayanan,custom_addons.bidang_pelayanan,custom_addons.model
 access_edit_baptisan,custom_addons.baptisan,model_baptisan,custom_addons.group_app_edit,1,1,1,0
 access_edit_pengerja,custom_addons.pengerja,model_pengerja,custom_addons.group_app_edit,1,1,1,0
 access_edit_gereja,custom_addons.gereja,model_gereja,custom_addons.group_app_edit,1,1,1,0
-access_edit_jemaat,custom_addons.jemaat,model_jemaat,custom_addons.group_app_edit,1,1,1,0
 access_edit_kartu_keluarga_jemaat,custom_addons.kartu_keluarga_jemaat,model_kartu_keluarga_jemaat,custom_addons.group_app_edit,1,1,1,0
 access_edit_kartu_keluarga_jemaat_line,custom_addons.kartu_keluarga_jemaat_line,model_kartu_keluarga_jemaat_line,custom_addons.group_app_edit,1,1,1,0
 access_edit_cool,custom_addons.cool,model_cool,custom_addons.group_app_edit,1,1,1,0
@@ -48,7 +44,6 @@ access_edit_bidang_pelayanan,custom_addons.bidang_pelayanan,custom_addons.model_
 access_approver_baptisan,custom_addons.baptisan,model_baptisan,custom_addons.group_app_approve,1,1,1,1
 access_approver_pengerja,custom_addons.pengerja,model_pengerja,custom_addons.group_app_approve,1,1,1,1
 access_approver_gereja,custom_addons.gereja,model_gereja,custom_addons.group_app_approve,1,1,1,1
-access_approver_jemaat,custom_addons.jemaat,model_jemaat,custom_addons.group_app_approve,1,1,1,1
 access_approver_kartu_keluarga_jemaat,custom_addons.kartu_keluarga_jemaat,model_kartu_keluarga_jemaat,custom_addons.group_app_approve,1,1,1,1
 access_approver_kartu_keluarga_jemaat_line,custom_addons.kartu_keluarga_jemaat_line,model_kartu_keluarga_jemaat_line,custom_addons.group_app_approve,1,1,1,1
 access_approver_cool,custom_addons.cool,model_cool,custom_addons.group_app_approve,1,1,1,1
@@ -67,3 +62,8 @@ access_chruch_operational_schedule_level_3,access_chruch_operational_schedule_rw
 access_chruch_activity_type_level_1,access_chruch_activity_type_r,model_church_activity_type,custom_addons.group_app_view,1,0,0,0
 access_chruch_activity_type_level_2,access_chruch_activity_type_rw,model_church_activity_type,custom_addons.group_app_input,1,1,0,0
 access_chruch_activity_type_level_3,access_chruch_activity_type_rwx,model_church_activity_type,custom_addons.group_app_edit,1,1,1,1
+
+access_pengerja_pelayanan_line_level_1,access_pengerja_pelayanan_line_r,model_pengerja_pelayanan_line,custom_addons.group_app_view,1,0,0,0
+access_pengerja_pelayanan_line_level_2,access_pengerja_pelayanan_line_rw,model_pengerja_pelayanan_line,custom_addons.group_app_edit,1,1,1,0
+access_pengerja_pelayanan_line_level_3,access_pengerja_pelayanan_line_rwx,model_pengerja_pelayanan_line,custom_addons.group_app_approve,1,1,1,1
+

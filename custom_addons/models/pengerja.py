@@ -9,17 +9,22 @@ class Pengerja(models.Model):
     _name = 'pengerja'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'data pengerja/Gembala'
-    _rec_name = 'name_id'
+    _rec_name = 'display_name'
 
+    def _compute_display_name(self):
+        for rec in self:
+            badge = '- ' + rec.kode_badge if rec.kode_badge else ''
+            rec.display_name = f"{rec.partner_id.name} {badge}"
+
+    display_name = fields.Char(help='Display Pengerja', compute='_compute_display_name')
     nomor = fields.Char('Nomor', required=True, index=True, readonly=True, default=lambda self: _('New'))
-    name_id = fields.Many2one(comodel_name='jemaat', string='Nama Pengerja', required=True)
+    partner_id = fields.Many2one(comodel_name='res.partner', string='Nama Pengerja', required=True)
     kode_badge = fields.Char('Kode Badge')
-    bidang_pelayanan1 = fields.Many2one(comodel_name='bidang.pelayanan', string='Bidang Pelayanan 1', order='nama_bidang_pelayanan asc')
-    bidang_pelayanan2 = fields.Many2one(comodel_name='bidang.pelayanan', string='Bidang Pelayanan 2', order='nama_bidang_pelayanan asc')
-    bidang_pelayanan3 = fields.Many2one(comodel_name='bidang.pelayanan', string='Bidang Pelayanan 3', order='nama_bidang_pelayanan asc')
+    pelayanan_line = fields.One2many(comodel_name='pengerja.pelayanan.line', inverse_name='pengerja_id',
+                                     string='Pelayanan')
     is_kkj = fields.Boolean(string='KKJ ?', default=False)
     nomor_kkj = fields.Many2one(comodel_name='kartu.keluarga.jemaat', string='Nomor KKJ')
-    is_baptis = fields.Boolean(string='Sudah dibaptis ?', default=False)
+    is_baptis = fields.Boolean(string='Sudah dibaptis ?', related='partner_id.is_baptis')
     nomor_baptis = fields.Many2one(comodel_name='baptisan', string='Nomor Baptisan')
     is_kom = fields.Boolean(string='Sudah ikut KOM ?', default=False)
     is_formulir_komitmen = fields.Boolean(string='Mengisi Formulir Komitmen ?', default=False)
@@ -29,7 +34,7 @@ class Pengerja(models.Model):
         ('belum bersedia', 'Belum Bersedia'),
         ('tidak bersedia', 'Tidak Bersedia'),
     ], string='Bersedia ikut MDPJ Onsite ?', default='bersedia')
-    image_1920 = fields.Image("Foto Pengerja", max_width=1920, max_height=1920)
+    image_1920 = fields.Image("Foto Pengerja", related='partner_id.image_1920')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('approved', 'Approved'),

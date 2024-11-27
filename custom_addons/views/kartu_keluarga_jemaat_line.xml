@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!--  form-->
+  <record id="kkj_line_view_form" model="ir.ui.view">
+    <field name="name">KKJ LineForm</field>
+    <field name="model">kartu.keluarga.jemaat.line</field>
+    <field name="arch" type="xml">
+      <form string="kkj line template lines">
+        <sheet>
+            <group>
+                <group string="Data Pribadi" name="personal_info">
+                    <field name="sequence" invisible="1"/>
+                    <field name="nama_jemaat_id" domain="[('is_company','=',False)]"/>
+                    <field name="hubungan_keluarga"/>
+                    <field name="jabatan_gereja"/>
+                    <field name="baptis_roh_kudus"/>
+                </group>
+                <group string="Informasi umum" name="detailed_information" attrs="{'invisible': [('nama_jemaat_id','=', False)]}">
+                    <field name="is_jemaat"/>
+                    <field name="tempat_lahir"/>
+                    <field name="tanggal_lahir"/>
+                    <field name="pekerjaan"/>
+                    <field name="pendidikan"/>
+                </group>
+            </group>
+            <group>
+                <group string="Diserahkan :">
+                    <field name="tanggal_penyerahan"/>
+                    <field name="tempat_penyerahan"/>
+                    <field name="pendeta_penyerahan"/>
+                </group>
+                <group string="Baptis Selam :">
+                    <field name="tanggal_baptis_selam"/>
+                    <field name="tempat_baptis_selam"/>
+                    <field name="pendeta_baptis_selam"/>
+                </group>
+            </group>
+            <group>
+                <group string="Pernikahan :">
+                    <field name="tanggal_pernikahan"/>
+                    <field name="tempat_pernikahan"/>
+                    <field name="pendeta_pernikahan"/>
+                </group>
+                <group string="Kematian :">
+                    <field name="tanggal_kematian"/>
+                    <field name="tempat_kematian"/>
+                    <field name="pendeta_kematian"/>
+                </group>
+            </group>
+            <notebook>
+                <page string="Informasi Pekerjaan" attrs="{'invisible': [('parent_id','=', False)]}">
+                    <group>
+                        <field name="parent_id" string="Tempat Bekerja"/>
+                        <field name="street" string="Jalan1"/>
+                        <field name="street2" string="jalan2"/>
+                        <field name="city" placeholder="City" string="Kota"/>
+                        <field name="state_id" placeholder="State" string="Provinsi"/>
+                        <field name="zip" placeholder="ZIP" string="Kode pos"/>
+                        <field name="country_id" placeholder="Country" string="Negara"/>
+                    </group>
+                </page>
+            </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!--  tree-->
+  <record id="kkj_line_view_tree" model="ir.ui.view">
+    <field name="name">KKJ LineList</field>
+    <field name="model">kartu.keluarga.jemaat.line</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="nama_jemaat_id"/>
+        <field name="hubungan_keluarga"/>
+        <field name="pekerjaan"/>
+        <field name="pendidikan"/>
+        <field name="tanggal_terdaftar"/>
+      </tree>
+    </field>
+  </record>
+</odoo>

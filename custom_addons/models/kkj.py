@@ -5,6 +5,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class KartuKeluargaJemaat(models.Model):
     _name = 'kartu.keluarga.jemaat'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -12,15 +13,17 @@ class KartuKeluargaJemaat(models.Model):
     _rec_name = 'nomor'
 
     nomor = fields.Char('Nomor KKJ', required=True, index=True, readonly=True, default=lambda self: _('New'))
-    nama_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama Jemaat', required=True, index=True)
+    nama_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama Jemaat', domain=[('is_jemaat', '=', True)]
+                                     , required=True, index=True)
     gereja_id = fields.Many2one(comodel_name='gereja', string='Nama Gereja', ondelete='set null')
     cool_id = fields.Many2one(comodel_name='cool', string='Cool (Jika ada)', default=False)
     image_1920 = fields.Image("Foto KKJ", max_width=1920, max_height=1920)
     nama_darurat = fields.Char(string='Nama')
     alamat_darurat = fields.Text(string='Alamat')
     telpon_darurat = fields.Char(string='Nomo Telpon')
-    kkj_detail_line = fields.One2many(comodel_name='kartu.keluarga.jemaat.line', inverse_name='kkj_id', string='Data Keluarga')
-    jemaat_ids = fields.One2many(comodel_name='jemaat', inverse_name='kkj_id', string='Data Jemaat')
+    kkj_detail_line = fields.One2many(comodel_name='kartu.keluarga.jemaat.line', inverse_name='kkj_id',
+                                      string='Data Keluarga')
+    jemaat_ids = fields.One2many(comodel_name='res.partner', inverse_name='kkj_id', string='Data Jemaat')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('approved', 'Approved'),
@@ -65,7 +68,6 @@ class KartuKeluargaJemaat(models.Model):
                    ('approved', 'cancel')]
         return (old_state, new_state) in allowed
 
-
     def change_state(self, new_state):
         for data in self:
             if data.is_allowed_transition(data.state, new_state):
@@ -73,7 +75,6 @@ class KartuKeluargaJemaat(models.Model):
             else:
                 msg = _('Moving from %s to %s is not allowed') % (data.state, new_state)
                 raise UserError(msg)
-
 
     def approve_kkj(self):
         self.change_state('approved')

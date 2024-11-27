@@ -22,13 +22,35 @@
           </div>
           <group>
             <group>
-              <field name="gereja_id" domain="[('state', '=', 'approved')]" options="{'no_create': True, 'no_create_edit':True}"/>
-              <field name="nama_jemaat_id" domain="[('state', '=', 'approved'), ('gereja_id', '=', gereja_id)]" options="{'no_create': True, 'no_create_edit':True}"/>
-              <field name="nama_pendeta_id" options="{'no_create': True, 'no_create_edit':True}"/>
-              <field name="tempat_baptis"/>
-              <field name="tanggal_baptis"/>
+                <field name="gereja_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                <field name="nama_jemaat_id" domain="['|',('is_jemaat','=',True),('gereja_id', '=', gereja_id)]" options="{'no_create': True, 'no_create_edit':True}" attrs="{'readonly': [('gereja_id','=',False)]}"/>
+            </group>
+            <group>
+                <field name="allowed_pendeta_ids" invisible="1"/>
+                <field name="nama_pendeta_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                <field name="tempat_baptis"/>
+                <field name="tanggal_baptis"/>
             </group>
           </group>
+          <notebook>
+            <page string="Jemaat" name="jemaat">
+                <field name="jemaat_ids">
+                  <tree>
+                    <field name="jemaat_number"/>
+                    <field name="name"/>
+                  </tree>
+                </field>
+            </page>
+            <page string="Pengerja" name="pengerja">
+                <field name="pengerja_line">
+                  <tree>
+                    <field name="partner_id"/>
+                    <field name="nomor"/>
+                    <field name="partner_id"/>
+                  </tree>
+                </field>
+            </page>
+          </notebook>
         </sheet>
         <div class="oe_chatter">
             <field name="message_follower_ids"/>

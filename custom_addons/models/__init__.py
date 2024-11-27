@@ -2,7 +2,8 @@
 
 from . import baptisan
 from . import pengerja
-from . import jemaat
+from . import pengerja_pelayanan_line
+from . import jemaat_2
 from . import gereja
 from . import kkj
 from . import cool

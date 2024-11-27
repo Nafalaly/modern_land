@@ -1,14 +1,11 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
-import logging
 
-_logger = logging.getLogger(__name__)
 
 class Jemaat(models.Model):
     _name = 'jemaat'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'data jemaat'
     _rec_name = 'name'
 
     nomor = fields.Char('Nomor Jemaat', required=True, index=True, readonly=True, default=lambda self: _('New'))
@@ -30,7 +27,6 @@ class Jemaat(models.Model):
     nomor_telpon = fields.Char('Nomor Telpon Rumah/Kantor')
     nomor_hp = fields.Char('Nomor Handphone')
     golongan_darah = fields.Selection([
-        ('', ''),
         ('O', 'O'),
         ('A', 'A'),
         ('B', 'B'),
@@ -49,7 +45,8 @@ class Jemaat(models.Model):
     nama_ibu_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama Ibu')
 
     baptisan_id = fields.Many2one(comodel_name='baptisan', string='Nomor Baptisan', ondelete='set null', default=False)
-    kkj_id = fields.Many2one(comodel_name='kartu.keluarga.jemaat', string='Nomor KKJ', ondelete='set null', default=False)
+    kkj_id = fields.Many2one(comodel_name='kartu.keluarga.jemaat', string='Nomor KKJ', ondelete='set null',
+                             default=False)
 
     alamat = fields.Text('Alamat')
     provinsi = fields.Char('Provinsi')
@@ -58,7 +55,7 @@ class Jemaat(models.Model):
     kelurahan = fields.Char('Kelurahan/Desa')
     kodepos = fields.Char('Kodepos')
 
-    pengerja_line_id = fields.One2many(comodel_name='pengerja', inverse_name='name_id', string='Nama Jemaat')
+    pengerja_line_id = fields.One2many(comodel_name='pengerja', inverse_name='partner_id', string='Nama Jemaat')
     cool_line_id = fields.One2many(comodel_name='cool.anggota', inverse_name='jemaat_id', string='Nama Jemaat')
     cool_doa_line_id = fields.One2many(comodel_name='cool.kubu.doa', inverse_name='jemaat_id', string='Nama Jemaat')
 

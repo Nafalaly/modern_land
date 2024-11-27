@@ -23,8 +23,8 @@
             <group>
               <field name="tanggal_cool"/>
               <field name="tempat"/>
-              <field name="waktu_start"/>
-              <field name="waktu_end"/>
+              <field name="waktu_start" widget="timepicker"/>
+              <field name="waktu_end" widget="timepicker"/>
               <field name="tema"/>
             </group>
           </group>

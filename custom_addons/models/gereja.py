@@ -65,7 +65,7 @@ class Gereja(models.Model):
                 """
 
     parent_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting Dari', ondelete='set null')
-    jemaat_line = fields.One2many(comodel_name='jemaat', inverse_name='gereja_id', string='Jemaat')
+    jemaat_line = fields.One2many(comodel_name='res.partner', inverse_name='gereja_id', string='Jemaat')
     cool_line_id = fields.One2many(comodel_name='cool', inverse_name='gereja_id', string='Cool')
 
     image_1920 = fields.Image("Foto Gereja", max_width=1920, max_height=1920)
