@@ -12,6 +12,7 @@ class Jemaat(models.Model):
     _inherit = 'res.partner'
 
     is_jemaat = fields.Boolean(string='Jemaat', help='True if Partner is Jemaat')
+    no_ktp = fields.Char(string='No KTP')
     jemaat_number = fields.Char('Nomor Jemaat', required=True, index=True, readonly=True,
                                 default=lambda self: _('New'), tracking=True)
     tanggal_lahir = fields.Date(string='Tanggal Lahir', required=True)
@@ -30,6 +31,7 @@ class Jemaat(models.Model):
         for rec in self:
             if rec.pekerjaan not in ['tidak bekerja', 'lain-lain']:
                 rec.function = rec.pekerjaan
+
     # TODO: Create Umur computed (?)
 
     pekerjaan = fields.Selection([
@@ -73,6 +75,18 @@ class Jemaat(models.Model):
     pengerja_count = fields.Float(compute='_compute_pengerja_count')
     cool_line_id = fields.One2many(comodel_name='cool.anggota', inverse_name='jemaat_id', string='Nama Jemaat')
     cool_doa_line_id = fields.One2many(comodel_name='cool.kubu.doa', inverse_name='jemaat_id', string='Nama Jemaat')
+
+    # Address Information
+    full_address = fields.Char(string='Alamat', help='display the full address',
+                               compute='_compute_address')
+
+    def _compute_address(self):
+        for rec in self:
+            state = rec.state_id.name if rec.state_id else ''
+            country = rec.country_id.name if rec.country_id else ''
+            rec.full_address = f"""
+                    {rec.street} {rec.street2}, {rec.city}, {state}, {country} {rec.zip}
+                """
 
     _sql_constraints = [
         ('nomor_uniq', 'unique (jemaat_number)', "Jemaat Number already exists !"),

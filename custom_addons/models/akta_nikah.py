@@ -13,30 +13,36 @@ class AktaNikah(models.Model):
 
     nomor = fields.Char('Nomor Akta Nikah', required=True, index=True, readonly=True,
                         default=lambda self: _('New'))
-    tanggal_konseling = fields.Date(string='Tanggal Konseling')
-    tanggal_pernikahan = fields.Date(string='Tanggal Pernikahan')
-    pendeta_id = fields.Many2one(comodel_name='pengerja', string='Nama Pendeta')
+    tanggal_konseling = fields.Date(string='Tanggal Konseling', required=True)
+    tanggal_pernikahan = fields.Date(string='Tanggal Pernikahan', required=True)
+    pendeta_id = fields.Many2one(comodel_name='pengerja', string='Nama Pendeta', required=True)
     pelayanan = fields.Selection([
         ('pernikahan', 'Pernikahan'),
         ('peneguhan', 'Peneguhan')
-    ], string='Pelayanan')
-    gereja_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting')
+    ], string='Pelayanan', default='pernikahan', required=True)
+    gereja_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting', required=True)
 
-    is_suami_jemaat = fields.Boolean(string='Apakah Jemaat ?')
-    suami_nama = fields.Char(string='Nama')
-    suami_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama', index=True)
-    suami_tempat_lahir = fields.Char(string='Tempat Lahir')
-    suami_tanggal_lahir = fields.Date(string='Tanggal Lahir')
-    suami_no_ktp = fields.Char(string='No. KTP')
-    suami_alamat = fields.Text(string='Alamat')
-    suami_telpon = fields.Char(string='No. Telpon')
-    suami_gereja_id = fields.Many2one(comodel_name='gereja', string='Baptis di Gereja')
+    # Suami Informations
+    is_suami_jemaat = fields.Boolean(related='suami_jemaat_id.is_jemaat')
+    suami_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama', index=True, required=True)
+    suami_tempat_lahir = fields.Char(related='suami_jemaat_id.tempat_lahir')
+    suami_tanggal_lahir = fields.Date(related='suami_jemaat_id.tanggal_lahir')
+    suami_no_ktp = fields.Char(related='suami_jemaat_id.no_ktp')
+
+    suami_alamat = fields.Char(related='suami_jemaat_id.full_address')
+
+    suami_telpon = fields.Char(related='suami_jemaat_id.mobile')
+    suami_gereja_id = fields.Many2one(comodel_name='gereja',
+                                      related='suami_jemaat_id.gereja_id', string='Baptis di Gereja')
     suami_status_pernikahan = fields.Selection([
         ('belum menikah', 'Belum Menikah'),
         ('pernah menikah', 'Pernah Menikah')
     ], string='Status Pernikahan')
-    suami_nama_ayah = fields.Char(string='Nama Ayah')
-    suami_nama_ibu = fields.Char(string='Nama Ibu')
+
+    suami_ayah = fields.Many2one(comodel_name='res.partner', related='suami_jemaat_id.ayah_jemaat_id', string='Nama Ayah')
+    suami_ibu = fields.Many2one(comodel_name='res.partner', related='suami_jemaat_id.ibu_jemaat_id', string='Nama Ibu')
+
+    # File Attachments
     suami_akta_lahir = fields.Binary("Upload Fotocopy Akta Lahir")
     suami_akta_lahir_name = fields.Char(string='Fotocopy Akta Lahir')
     suami_kk_legalisir = fields.Binary("Upload Fotocopy KK Legalisir")
@@ -58,21 +64,23 @@ class AktaNikah(models.Model):
     suami_pasfoto = fields.Binary("Upload Pas foto bersama uk.6x4 (berwarna 3 lbr)")
     suami_pasfoto_name = fields.Char(string='Pas foto bersama uk.6x4 (berwarna 3 lbr)')
 
-    is_istri_jemaat = fields.Boolean(string='Apakah Jemaat ?')
-    istri_nama = fields.Char(string='Nama')
-    istri_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama', index=True)
-    istri_tempat_lahir = fields.Char(string='Tempat Lahir')
-    istri_tanggal_lahir = fields.Date(string='Tanggal Lahir')
-    istri_no_ktp = fields.Char(string='No. KTP')
-    istri_alamat = fields.Text(string='Alamat')
-    istri_telpon = fields.Char(string='No. Telpon')
-    istri_gereja_id = fields.Many2one(comodel_name='gereja', string='Baptis di Gereja')
+    is_istri_jemaat = fields.Boolean(related='istri_jemaat_id.is_jemaat')
+    istri_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama', index=True, required=True)
+    istri_tempat_lahir = fields.Char(related='istri_jemaat_id.tempat_lahir')
+    istri_tanggal_lahir = fields.Date(related='istri_jemaat_id.tanggal_lahir')
+    istri_no_ktp = fields.Char(related='istri_jemaat_id.no_ktp')
+    istri_alamat = fields.Char(related='istri_jemaat_id.full_address')
+    istri_telpon = fields.Char(related='istri_jemaat_id.mobile')
+    istri_gereja_id = fields.Many2one(comodel_name='gereja',
+                                      related='istri_jemaat_id.gereja_id', string='Baptis di Gereja')
     istri_status_pernikahan = fields.Selection([
         ('belum menikah', 'Belum Menikah'),
         ('pernah menikah', 'Pernah Menikah')
     ], string='Status Pernikahan')
-    istri_nama_ayah = fields.Char(string='Nama Ayah')
-    istri_nama_ibu = fields.Char(string='Nama Ibu')
+
+    istri_ayah = fields.Many2one(comodel_name='res.partner', related='istri_jemaat_id.ayah_jemaat_id', string='Nama Ayah')
+    istri_ibu = fields.Many2one(comodel_name='res.partner', related='istri_jemaat_id.ibu_jemaat_id', string='Nama Ibu')
+
     istri_akta_lahir = fields.Binary("Upload Fotocopy Akta Lahir")
     istri_akta_lahir_name = fields.Char(string='Fotocopy Akta Lahir')
     istri_kk_legalisir = fields.Binary("Upload Fotocopy KK Legalisir")

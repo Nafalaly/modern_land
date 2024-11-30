@@ -101,6 +101,7 @@
               <xpath expr="//sheet/group" position="before">
                   <group>
                       <group name="basic_info" string="Informasi Dasar">
+                          <field name="no_ktp" required="True"/>
                           <field name="tanggal_lahir"/>
                           <field name="tempat_lahir"/>
                           <field name="jenis_kelamin"/>
