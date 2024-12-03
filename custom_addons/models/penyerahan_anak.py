@@ -5,13 +5,15 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class PenyerahanAnak(models.Model):
     _name = 'penyerahan.anak'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'informasi mengenai penyerahan anak'
     _rec_name = 'nomor'
 
-    nomor = fields.Char('Nomor Penyerahan Anak', required=True, index=True, readonly=True, default=lambda self: _('New'))
+    nomor = fields.Char('Nomor Penyerahan Anak', required=True, index=True, readonly=True,
+                        default=lambda self: _('New'))
     gereja_id = fields.Many2one(comodel_name='gereja', string='Gereja', ondelete='set null')
     nama_anak = fields.Char(string='Nama Anak', required=True)
     tempat_lahir = fields.Char(string='Tempat Lahir', required=True)
@@ -20,15 +22,15 @@ class PenyerahanAnak(models.Model):
         ('laki-laki', 'Laki-Laki'),
         ('wanita', 'Wanita')
     ], 'Jenis Kelamin')
+    partner_id = fields.Many2one(comodel_name='res.partner', help='Related Jemaat')
     tanggal_penyerahan = fields.Date(string='Tanggal Penyerahan', required=True)
     nama_pendeta_id = fields.Many2one(comodel_name='pengerja', string='Nama Pendeta', ondelete='set null')
     image_1920 = fields.Image("Foto", max_width=1920, max_height=1920)
-    is_ayah_jemaat = fields.Boolean(string='Ayah Jemaat ?')
-    nama_ayah = fields.Char(string='Nama Ayah')
-    nama_ayah_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama Ayah', ondelete='set null')
-    is_ibu_jemaat = fields.Boolean(string='Ibu Jemaat ?')
-    nama_ibu = fields.Char(string='Nama Ibu')
-    nama_ibu_jemaat_id = fields.Many2one(comodel_name='jemaat', string='Nama Ibu', ondelete='set null')
+    is_ayah_jemaat = fields.Boolean(string='Ayah Jemaat ?', related='nama_ayah_jemaat_id.is_jemaat')
+    nama_ayah_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama Ayah', domain=[('is_jemaat', '=', True)],
+                                          ondelete='set null')
+    is_ibu_jemaat = fields.Boolean(string='Ibu Jemaat ?', related='nama_ibu_jemaat_id.is_jemaat')
+    nama_ibu_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama Ibu', ondelete='set null')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('approved', 'Approved'),

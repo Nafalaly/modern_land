@@ -51,12 +51,7 @@
                 <page string="Informasi Pekerjaan" attrs="{'invisible': [('parent_id','=', False)]}">
                     <group>
                         <field name="parent_id" string="Tempat Bekerja"/>
-                        <field name="street" string="Jalan1"/>
-                        <field name="street2" string="jalan2"/>
-                        <field name="city" placeholder="City" string="Kota"/>
-                        <field name="state_id" placeholder="State" string="Provinsi"/>
-                        <field name="zip" placeholder="ZIP" string="Kode pos"/>
-                        <field name="country_id" placeholder="Country" string="Negara"/>
+                        <field name="full_address" string="Alamat"/>
                     </group>
                 </page>
             </notebook>

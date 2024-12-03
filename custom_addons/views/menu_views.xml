@@ -91,6 +91,6 @@
         <menuitem name="Akta Nikah" sequence="4" id="akta_nikah_menu" parent="jemaat_pelayanan_menu" action="akta_nikah_action"/>
       <menuitem name="Laporan" sequence="2" id="laporan_pelayanan_menu" parent="pelayanan_base_menu"/>
         <menuitem name="Ibadah Raya" sequence="1" id="ibadah_raya_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>
-        <menuitem name="COOL" sequence="2" id="cool_menu" parent="laporan_pelayanan_menu" action="baptisan_action"/>
+        <menuitem name="COOL" sequence="2" id="cool_menu" parent="laporan_pelayanan_menu" action="cool_action"/>
 
 </odoo>

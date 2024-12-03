@@ -19,7 +19,6 @@ class KartuKeluargaJemaat(models.Model):
     tanggal_lahir = fields.Date(string='Tanggal Lahir', related='nama_jemaat_id.tanggal_lahir')
     kkj_id = fields.Many2one(comodel_name='kartu.keluarga.jemaat', string='Kartu Keluarga Jemaat', ondelete='cascade')
     sequence = fields.Integer(string='sequence')
-    # TODO: Should we put on Res.partner ?
     pekerjaan = fields.Selection([
         ('tidak bekerja', 'Tidak Bekerja'),
         ('pegawai negeri', 'Pegawai Negeri'),
@@ -53,14 +52,7 @@ class KartuKeluargaJemaat(models.Model):
     parent_id = fields.Many2one(comodel_name='res.partner', string='Nama Perusahaan', help='Tempat Bekerja',
                                 related='nama_jemaat_id.parent_id')
 
-    street = fields.Char(string='Street', related='parent_id.street')
-    street2 = fields.Char(string='Street2', related='parent_id.street2')
-    zip = fields.Char(string="Zip Code", related='parent_id.zip')
-    city = fields.Char(string='City', related='parent_id.city')
-    country_id = fields.Many2one('res.country', string='Country', related='parent_id.country_id')
-    city_id = fields.Many2one(comodel_name='res.city', string='City ID', related='parent_id.city_id')
-    country_enforce_cities = fields.Boolean(related='country_id.enforce_cities')
-    state_id = fields.Many2one("res.country.state", string='State', related='parent_id.state_id')
+    full_address = fields.Char(string='Alamat Perusahaan', related='parent_id.full_address')
 
     tanggal_terdaftar = fields.Date(string='Tanggal Terdaftar')
     jabatan_gereja = fields.Selection([

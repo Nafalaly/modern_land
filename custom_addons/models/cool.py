@@ -13,9 +13,9 @@ class Cool(models.Model):
     _description = 'data cool'
     _rec_name = 'name'
 
-    name = fields.Char('Nama Cool')
-    gereja_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting')
-    name_cooler = fields.Many2one(comodel_name='res.partner', string='Nama COOLer')
+    name = fields.Char('Nama Cool', required=True)
+    gereja_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting', required=True)
+    name_cooler = fields.Many2one(comodel_name='res.partner', string='Nama COOLer', domain=[('is_jemaat', '=', True)], required=True)
     jenis_cooler = fields.Selection([
         ('anak', 'Anak'),
         ('dm', 'DM'),
@@ -59,7 +59,7 @@ class CoolAnggota(models.Model):
     _rec_name = 'cool_id'
 
     cool_id = fields.Many2one(comodel_name='cool', string='Cool ID')
-    jemaat_id = fields.Many2one(comodel_name='res.partner', string='Anggota')
+    jemaat_id = fields.Many2one(comodel_name='res.partner', string='Anggota', domain=[('is_jemaat', '=', True)])
     tanggal_gabung = fields.Date(string='Tanggal Gabung')
     anggota_baru = fields.Boolean(string='Anggota Baru ?', default=True)
     state = fields.Selection([
@@ -75,7 +75,7 @@ class CoolKubuDoa(models.Model):
     _rec_name = 'cool_id'
 
     cool_id = fields.Many2one(comodel_name='cool', string='Cool ID')
-    jemaat_id = fields.Many2one(comodel_name='res.partner', string='Anggota')
+    jemaat_id = fields.Many2one(comodel_name='res.partner', string='Anggota', domain=[('is_jemaat', '=', True)])
     tanggal_gabung = fields.Date(string='Tanggal Gabung')
     anggota_baru = fields.Boolean(string='Anggota Baru ?', compute='_set_anggota')
     state = fields.Selection([
