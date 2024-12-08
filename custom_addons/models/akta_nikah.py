@@ -1,15 +1,15 @@
-from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo import models, fields
 from odoo.tools.translate import _
-import logging
-
-_logger = logging.getLogger(__name__)
 
 class AktaNikah(models.Model):
     _name = 'akta.nikah'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'informasi mengenai akta nikah'
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'gbi.base.document']
+    _description = 'Data Akta Nikah'
     _rec_name = 'nomor'
+
+    _rec_seq_fields_name = {
+        'nomor': 'app.akta.nikah.seq'
+    }
 
     nomor = fields.Char('Nomor Akta Nikah', required=True, index=True, readonly=True,
                         default=lambda self: _('New'))
@@ -39,7 +39,8 @@ class AktaNikah(models.Model):
         ('pernah menikah', 'Pernah Menikah')
     ], string='Status Pernikahan')
 
-    suami_ayah = fields.Many2one(comodel_name='res.partner', related='suami_jemaat_id.ayah_jemaat_id', string='Nama Ayah')
+    suami_ayah = fields.Many2one(comodel_name='res.partner', related='suami_jemaat_id.ayah_jemaat_id',
+                                 string='Nama Ayah')
     suami_ibu = fields.Many2one(comodel_name='res.partner', related='suami_jemaat_id.ibu_jemaat_id', string='Nama Ibu')
 
     # File Attachments
@@ -78,7 +79,8 @@ class AktaNikah(models.Model):
         ('pernah menikah', 'Pernah Menikah')
     ], string='Status Pernikahan')
 
-    istri_ayah = fields.Many2one(comodel_name='res.partner', related='istri_jemaat_id.ayah_jemaat_id', string='Nama Ayah')
+    istri_ayah = fields.Many2one(comodel_name='res.partner', related='istri_jemaat_id.ayah_jemaat_id',
+                                 string='Nama Ayah')
     istri_ibu = fields.Many2one(comodel_name='res.partner', related='istri_jemaat_id.ibu_jemaat_id', string='Nama Ibu')
 
     istri_akta_lahir = fields.Binary("Upload Fotocopy Akta Lahir")
@@ -103,56 +105,9 @@ class AktaNikah(models.Model):
     istri_pasfoto_name = fields.Char(string='Pas foto bersama uk.6x4 (berwarna 3 lbr)')
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('approved', 'Approved'),
-        ('cancel', 'Cancel'),
+        ('confirm', 'Confirmed'),
     ], 'Status', default="draft")
 
     _sql_constraints = [
         ('nomor_uniq', 'unique (nomor)', "nomor already exists !"),
     ]
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if 'company_id' in vals:
-                self = self.with_company(vals['company_id'])
-            if vals.get('nomor', _("New")) == _("New"):
-                seq_date = fields.Datetime.context_timestamp(
-                    self, fields.Datetime.to_datetime(vals['create_date'])
-                ) if 'create_date' in vals else None
-                vals['nomor'] = self.env['ir.sequence'].next_by_code(
-                    'app.akta.nikah.seq', sequence_date=seq_date) or _("New")
-
-        return super().create(vals_list)
-
-    @api.ondelete(at_uninstall=False)
-    def _unlink_except_draft_or_cancel(self):
-        for data in self:
-            if data.state not in ('draft', 'cancel'):
-                raise UserError(_(
-                    "You can not delete a data."
-                    " You must first cancel it."))
-
-    def action_cancel(self):
-        self.change_state('cancel')
-
-    @api.model
-    def is_allowed_transition(self, old_state, new_state):
-        allowed = [('draft', 'approved'),
-                   ('approved', 'draft'),
-                   ('approved', 'cancel')]
-        return (old_state, new_state) in allowed
-
-    def change_state(self, new_state):
-        for data in self:
-            if data.is_allowed_transition(data.state, new_state):
-                data.state = new_state
-            else:
-                msg = _('Moving from %s to %s is not allowed') % (data.state, new_state)
-                raise UserError(msg)
-
-    def approve_akta_nikah(self):
-        self.change_state('approved')
-
-    def redraft_akta_nikah(self):
-        self.change_state('draft')

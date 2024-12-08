@@ -1,5 +1,5 @@
 #  -*- coding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class PengerjaPelayananLine(models.Model):
@@ -17,4 +17,4 @@ class PengerjaPelayananLine(models.Model):
 
     def _compute_display_name(self):
         for rec in self:
-            rec.display_name = ''
+            rec.display_name = f"""[{rec.pengerja_id.display_name}] {rec.pelayanan_id.nama_bidang_pelayanan}"""

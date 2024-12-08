@@ -56,11 +56,6 @@
     <field name="res_model">bidang.pelayanan</field>
     <field name="view_mode">tree,form</field>
   </record>
-  <record id="master_approval_action" model="ir.actions.act_window">
-    <field name="name">Master Approval</field>
-    <field name="res_model">master.approval</field>
-    <field name="view_mode">tree,form</field>
-  </record>
   <!-- TODO: ADD Menu for Provinsi & Kota -->
 
   <record id="master_departement_action" model="ir.actions.act_window">
@@ -78,7 +73,6 @@
       <menuitem name="Pengerja" sequence="5" id="pengerja_base_menu" parent="data_base_menu" action="pengerja_action"/>
       <menuitem name="Bidang Pelayanan" sequence="6" id="bidang_pelayanan_base_menu" parent="data_base_menu" action="bidang_pelayanan_action"/>
       <menuitem name="Cool" sequence="7" id="cool_base_menu" parent="data_base_menu" action="cool_action"/>
-      <menuitem name="Approval" sequence="8" id="master_approval_base_menu" parent="data_base_menu" action="master_approval_action"/>
 
       <menuitem name="Daerah Administrasi" sequence="9" id="daerah_administrasi_base_menu" parent="data_base_menu"/>
       <!-- TODO: ADD Menu for Address   -->

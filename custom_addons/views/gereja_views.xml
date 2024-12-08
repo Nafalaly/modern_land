@@ -6,12 +6,6 @@
     <field name="model">gereja</field>
     <field name="arch" type="xml">
       <form>
-        <header>
-          <button name="approve_gereja" class="oe_highlight" groups="custom_addons.group_app_approve" attrs="{'invisible':[('state', '=', 'approved')]}" string="Approve" type="object"/>
-          <button name="redraft_gereja" class="oe_highlight" groups="custom_addons.group_app_approve" attrs="{'invisible':[('state', '=', 'draft')]}" string="Re-draft" type="object"/>
-          <button name="action_cancel" class="oe_highlight" groups="custom_addons.group_app_approve" type="object" string="Cancel" attrs="{'invisible': [('state', 'not in', ['draft'])]}" data-hotkey="z"/>
-          <field name="state" widget="statusbar"/>
-        </header>
         <sheet>
           <field name="image_1920" widget="image" class="oe_avatar"/>
           <div class="oe_title">
@@ -32,7 +26,7 @@
                     <field name="country_enforce_cities" invisible="1" required="1"/>
                     <field name="street" string="jalan" required="1"/>
                     <field name="city" string="Kota" attrs="{'invisible':[('country_enforce_cities','=',True)]}" required="1"/>
-                    <field name="city_id" string="Kota" attrs="{'invisible':[('country_enforce_cities','=',False)]}" required="1"/>
+                    <field name="city_id" string="Kota" attrs="{'invisible':[('country_enforce_cities','=',False)]}"/>
                     <field name="state_id" string="Provinsi" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" required="1"/>
                     <field name="zip" string="Kode pos" required="1"/>
                     <field name="country_id" string="Negara" required="1"/>
@@ -70,7 +64,6 @@
         <field name="parent_id"/>
         <field name="phone" string="Nomor Telpon"/>
         <field name="full_address"/>
-        <field name="state"/>
         <field name="active" readonly="1" widget="boolean_toggle"/>
       </tree>
     </field>

@@ -1,24 +1,25 @@
 #  -*- coding: utf-8 -*-
-#  -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from odoo.exceptions import UserError
-from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class Gereja(models.Model):
     _name = 'gereja'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _description = 'data gereja'
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'gbi.base.document']
+    _description = 'data Gereja'
     _rec_name = 'name'
+
+    _rec_seq_fields_name = {
+        'sequence': 'app.gereja.seq'
+    }
 
     sequence = fields.Char('Nomor Gereja', index=True, readonly=True, help='No Urut')
     name = fields.Char('Nama Gereja', required=True)
     gembala_id = fields.Many2one(comodel_name='pengerja', string='Nama Gembala', ondelete='restrict')
     rank_id = fields.Many2one(comodel_name='rank', string='Rank Gereja', ondelete='restrict')
+
+    # as default Chruch will always in confirm state,
+    # in case need two ways validation then remove this code
+    state = fields.Selection(default="confirm")
 
     def _get_default_country_id(self):
         """
@@ -43,11 +44,13 @@ class Gereja(models.Model):
     state_id = fields.Many2one("res.country.state", string='State', default=_get_default_state_id)
     email = fields.Char(string='Email')
     phone = fields.Char(string='Phone')
-    full_address = fields.Char(string='Alamat', help='Help to search full address', compute='_compute_address', store=True)
+    full_address = fields.Char(string='Alamat', help='Help to search full address', compute='_compute_address',
+                               store=True)
 
     # Operational Schedule
     operational_schedule_line = fields.One2many(comodel_name='chruch.operational.schedule', inverse_name='church_id',
                                                 string='Jadwal Ibadah')
+
     @api.depends(
         'street',
         'zip',
@@ -69,11 +72,6 @@ class Gereja(models.Model):
     cool_line_id = fields.One2many(comodel_name='cool', inverse_name='gereja_id', string='Cool')
 
     image_1920 = fields.Image("Foto Gereja", max_width=1920, max_height=1920)
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('approved', 'Approved'),
-        ('cancel', 'Cancel'),
-    ], 'Status', default="draft")
     active = fields.Boolean(string='Aktif', default=True)
     _sql_constraints = [
         ('nomor_uniq', 'unique(sequence)', "nomor already exists !"),
@@ -90,46 +88,3 @@ class Gereja(models.Model):
             self.city = False
             self.zip = False
             self.state_id = False
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get('sequence', _("New")) == _("New"):
-                seq_date = fields.Datetime.context_timestamp(
-                    self, fields.Datetime.to_datetime(vals['create_date'])
-                ) if 'create_date' in vals else None
-                vals['sequence'] = (self.env.ref('custom_addons.app_gereja_sequence').
-                                    next_by_code('app.gereja.seq', sequence_date=seq_date) or _("New"))
-
-        return super().create(vals_list)
-
-    @api.ondelete(at_uninstall=False)
-    def _unlink_except_draft_or_cancel(self):
-        for data in self:
-            if data.state not in ('draft', 'cancel'):
-                raise UserError(_(
-                    "You can not delete a data."
-                    " You must first cancel it."))
-
-    def action_cancel(self):
-        self.change_state('cancel')
-
-    @api.model
-    def is_allowed_transition(self, old_state, new_state):
-        allowed = [('draft', 'approved'),
-                   ('approved', 'draft')]
-        return (old_state, new_state) in allowed
-
-    def change_state(self, new_state):
-        for data in self:
-            if data.is_allowed_transition(data.state, new_state):
-                data.state = new_state
-            else:
-                msg = _('Moving from %s to %s is not allowed') % (data.state, new_state)
-                raise UserError(msg)
-
-    def approve_gereja(self):
-        self.change_state('approved')
-
-    def redraft_gereja(self):
-        self.change_state('draft')

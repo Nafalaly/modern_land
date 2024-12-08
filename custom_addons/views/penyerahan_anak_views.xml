@@ -6,6 +6,11 @@
     <field name="model">penyerahan.anak</field>
     <field name="arch" type="xml">
       <form>
+        <header>
+          <button name="action_confirm" string="Confirm" type="object" attrs="{'invisible': [('state','!=','draft')]}"/>
+          <button name="action_reset_to_draft" class="btn btn-secondary" string="Reset to draft" type="object" attrs="{'invisible': [('state','=','draft')]}"/>
+          <field name="state" widget="statusbar"/>
+        </header>
         <sheet>
           <field name="image_1920" widget="image" class="oe_avatar"/>
           <div class="oe_title">
@@ -56,6 +61,7 @@
         <field name="is_ibu_jemaat" invisible="1"/>
         <field name="nama_ayah_jemaat_id"/>
         <field name="nama_ibu_jemaat_id"/>
+        <field name="state" string="Status" widget="badge" decoration-success="state == 'confirm'" decoration-info="state == 'draft'"/>
       </tree>
     </field>
   </record>

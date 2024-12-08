@@ -1,7 +1,7 @@
 from odoo import models, fields
 
 
-class Departement(models.Model):
+class Department(models.Model):
     """
     Inherit from Operating.unit
     """
@@ -16,6 +16,7 @@ class Departement(models.Model):
         """
         Set default partner_id to Company
         """
-        return self.env.ref('base.main_partner')
+        partner_id = self.env.ref('base.main_partner')
+        return partner_id
 
     partner_id = fields.Many2one(default=_get_default_partner_id)

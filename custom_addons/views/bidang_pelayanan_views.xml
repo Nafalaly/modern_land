@@ -15,7 +15,6 @@
               <field name="pelayanan_penyerahan_anak" widget="boolean_toggle"/>
               <field name="pelayanan_pernikahan" widget="boolean_toggle"/>
               <field name="pelayanan_kematian" widget="boolean_toggle"/>
-<!--                <field name="sequence"/>-->
             </group>
           </group>
         </sheet>
@@ -40,7 +39,6 @@
         <field name="pelayanan_penyerahan_anak" widget="boolean_checkbox"/>
         <field name="pelayanan_pernikahan" widget="boolean_checkbox"/>
         <field name="pelayanan_kematian" widget="boolean_checkbox"/>
-<!--        <field name="sequence"/>-->
       </tree>
     </field>
   </record>

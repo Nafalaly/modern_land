@@ -1,10 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class Cool(models.Model):
@@ -15,7 +10,8 @@ class Cool(models.Model):
 
     name = fields.Char('Nama Cool', required=True)
     gereja_id = fields.Many2one(comodel_name='gereja', string='Cabang/Ranting', required=True)
-    name_cooler = fields.Many2one(comodel_name='res.partner', string='Nama COOLer', domain=[('is_jemaat', '=', True)], required=True)
+    name_cooler = fields.Many2one(comodel_name='res.partner', string='Nama COOLer', domain=[('is_jemaat', '=', True)],
+                                  required=True)
     jenis_cooler = fields.Selection([
         ('anak', 'Anak'),
         ('dm', 'DM'),
@@ -32,9 +28,7 @@ class Cool(models.Model):
     waktu_start = fields.Char(string='Waktu Mulai')
     waktu_end = fields.Char(string='Sampai')
     tema = fields.Char(string='Tema')
-    company_id = fields.Many2one('res.company', store=True, copy=False, string="Company",
-                                 default=lambda self: self.env.user.company_id.id)
-    currency_id = fields.Many2one('res.currency', string="Currency", related='company_id.currency_id',
+    currency_id = fields.Many2one('res.currency', string="Currency",
                                   default=lambda self: self.env.user.company_id.currency_id.id)
     persembahan = fields.Monetary(string="Persembahan")
     state = fields.Selection([
@@ -47,9 +41,6 @@ class Cool(models.Model):
 
     def action_cancel(self):
         self.change_state('not active')
-
-    def _compute_time(self):
-        return True
 
 
 class CoolAnggota(models.Model):

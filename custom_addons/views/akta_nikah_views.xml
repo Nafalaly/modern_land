@@ -6,6 +6,11 @@
     <field name="model">akta.nikah</field>
     <field name="arch" type="xml">
       <form>
+        <header>
+          <button name="action_confirm" string="Confirm" type="object" attrs="{'invisible': [('state','!=','draft')]}"/>
+          <button name="action_reset_to_draft" class="btn btn-secondary" string="Reset to draft" type="object" attrs="{'invisible': [('state','=','draft')]}"/>
+          <field name="state" widget="statusbar"/>
+        </header>
         <sheet>
           <div class="oe_title">
               <label for="nomor"/>
@@ -25,7 +30,7 @@
           <group>
             <group string="Data Suami">
               <field name="is_suami_jemaat" attrs="{'invisible': [('suami_jemaat_id','=',False)]}"/>
-              <field name="suami_jemaat_id" options="{'no_create': True, 'no_create_edit':True}"/>
+              <field name="suami_jemaat_id" options="{'no_create': True, 'no_create_edit':True}" domain="[('is_company','=',False),('jenis_kelamin','=','male')]"/>
               <field name="suami_tempat_lahir" attrs="{'invisible': [('suami_jemaat_id','=',False)]}"/>
               <field name="suami_tanggal_lahir" attrs="{'invisible': [('suami_jemaat_id','=',False)]}"/>
               <field name="suami_no_ktp" attrs="{'invisible': [('suami_jemaat_id','=',False)]}"/>
@@ -38,7 +43,7 @@
             </group>
             <group string="Data Istri">
               <field name="is_istri_jemaat" attrs="{'invisible': [('istri_jemaat_id','=',False)]}"/>
-              <field name="istri_jemaat_id" options="{'no_create': True, 'no_create_edit':True}"/>
+              <field name="istri_jemaat_id" options="{'no_create': True, 'no_create_edit':True}" domain="[('is_company','=',False),('jenis_kelamin','=','female')]"/>
               <field name="istri_tempat_lahir" attrs="{'invisible': [('istri_jemaat_id','=',False)]}"/>
               <field name="istri_tanggal_lahir" attrs="{'invisible': [('istri_jemaat_id','=',False)]}"/>
               <field name="istri_no_ktp" attrs="{'invisible': [('istri_jemaat_id','=',False)]}"/>
@@ -117,7 +122,7 @@
         <field name="tanggal_pernikahan"/>
         <field name="pendeta_id"/>
         <field name="gereja_id"/>
-<!--        <field name="state"/>-->
+        <field name="state" string="Status" widget="badge" decoration-success="state == 'confirm'" decoration-info="state == 'draft'"/>
       </tree>
     </field>
   </record>

@@ -1,16 +1,10 @@
-from odoo import models, fields, api
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
-import logging
-
-_logger = logging.getLogger(__name__)
+from odoo import models, fields
 
 
 class KartuKeluargaJemaat(models.Model):
     _name = 'kartu.keluarga.jemaat.line'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'kartu keluarga jemaat detail'
-    # _rec_name = 'nomor'
 
     is_jemaat = fields.Boolean(string='Jemaat Gereja', related='nama_jemaat_id.is_jemaat')
     nama_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Nama Jemaat', required=True, index=True,
@@ -85,18 +79,3 @@ class KartuKeluargaJemaat(models.Model):
     tanggal_kematian = fields.Date(string='Tanggal')
     tempat_kematian = fields.Char(string='Gereja yang melayani')
     pendeta_kematian = fields.Char(string='Pendeta yang melayani')
-
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('approved', 'Approved'),
-        ('cancel', 'Cancel'),
-    ], 'Status', default="draft")
-
-    @api.ondelete(at_uninstall=False)
-    def _unlink_except_draft_or_cancel(self):
-        for data in self:
-            for detail in data.kkj_id:
-                if detail.state not in ('draft', 'cancel'):
-                    raise UserError(_(
-                        "You can not delete a data."
-                        " You must first cancel it."))

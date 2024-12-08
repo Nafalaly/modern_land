@@ -8,10 +8,16 @@
           <field name="mode">primary</field>
           <field name="priority">32</field>
           <field name="arch" type="xml">
+              <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <field name="pengerja_id" invisible="1"/>
+                <button name="action_open_pengerja" type="object"
+                        class="oe_stat_button" icon="fa-user" string="Pengerja" attrs="{'invisible': [('pengerja_id','=',False)]}"/>
+                <button name="action_open_baptis" type="object"
+                        class="oe_stat_button" icon="fa-book" string="Baptis" attrs="{'invisible': [('baptisan_id','=',False)]}"/>
+              </xpath>
               <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="pengerja_count" invisible="1"/>
-                    <button name="action_create_pengerja" class="btn btn-primary" type="object" string="Create Pengerja" attrs="{'invisible': [('pengerja_count','!=',0)]}" groups="custom_addons.group_app_edit"/>
+                    <button name="action_create_pengerja" class="btn btn-primary" type="object" string="Create Pengerja" attrs="{'invisible': [('pengerja_id','!=',False)]}" groups="custom_addons.group_app_edit"/>
                 </header>
               </xpath>
               <xpath expr="//field[@name='company_type']" position="attributes">
@@ -39,7 +45,7 @@
                                string="lainya"/>
                         <field name="parent_id" string="Perusahaan/Tempat Bekerja"
                                attrs="{'invisible': [('pekerjaan','in', ['tidak bekerja','hamba tuhan'])]}" domain="[('is_company','=',True)]"
-                               context="{'default_is_company': True}"/>
+                               context="{'default_is_company': True, 'form_view_ref': 'custom_addons.jemaat_company_view_form'}"/>
                   </group>
               </xpath>
               <xpath expr="//field[@name='function']" position="attributes">
@@ -70,9 +76,6 @@
               <xpath expr="//page[@name='sales_purchases']" position="attributes">
                   <attribute name="invisible">1</attribute>
               </xpath>
-              <xpath expr="//page[@name='sales_purchases']" position="attributes">
-                  <attribute name="invisible">1</attribute>
-              </xpath>
               <xpath expr="//field[@name='company_type']" position="after">
                   <h4 class="text-muted">Nama Jemaat</h4>
               </xpath>
@@ -87,12 +90,13 @@
                             <field name="gereja_id"/>
                             <field name="jemaat_number"/>
                             <field name="is_baptis"/>
+                            <field name="baptisan_id"/>
                             <field name="is_baptis_roh_kudus"/>
                         </group>
                         <group>
-                            <field name="ayah_jemaat_id" context="{'form_view_ref': 'custom_addons.jemaat_view_form'}"/>
+                            <field name="ayah_jemaat_id" context="{'form_view_ref': 'custom_addons.jemaat_view_form'}" domain="[('is_company','=',False),('jenis_kelamin','=','male')]"/>
                             <field name="is_ayah_jemaat"/>
-                            <field name="ibu_jemaat_id" context="{'form_view_ref': 'custom_addons.jemaat_view_form'}"/>
+                            <field name="ibu_jemaat_id" context="{'form_view_ref': 'custom_addons.jemaat_view_form'}" domain="[('is_company','=',False),('jenis_kelamin','=','female')]"/>
                             <field name="is_ibu_jemaat"/>
                         </group>
                     </group>
@@ -113,6 +117,40 @@
                             <field name="ibu_jemaat_id" context="{'form_view_ref': 'custom_addons.jemaat_view_form'}"/>
                       </group>
                   </group>
+              </xpath>
+          </field>
+      </record>
+
+    <record id="jemaat_company_view_form" model="ir.ui.view">
+          <field name="name">simply Company Form</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="mode">primary</field>
+          <field name="priority">36</field>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='company_type']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="//field[@name='parent_id']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="//field[@name='type']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="//sheet/group/group" position="attributes">
+                  <attribute name="string">Alamat</attribute>
+              </xpath>
+              <xpath expr="//sheet/group/group[2]" position="attributes">
+                  <attribute name="string">Kontak</attribute>
+              </xpath>
+              <xpath expr="//field[@name='website']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="//page[@name='contact_addresses']" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </xpath>
+              <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                  <attribute name="invisible">1</attribute>
               </xpath>
           </field>
       </record>

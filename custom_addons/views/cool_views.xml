@@ -7,7 +7,6 @@
     <field name="arch" type="xml">
       <form>
         <header>
-          <button name="action_cancel" class="oe_highlight" groups="custom_addons.group_app_approve" type="object" string="Cancel" attrs="{'invisible': [('state', 'not in', ['not active'])]}" data-hotkey="z"/>
           <field name="state" widget="statusbar"/>
         </header>
         <sheet>

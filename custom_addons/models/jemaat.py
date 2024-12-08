@@ -1,15 +1,19 @@
 #  -*- coding: utf-8 -*-
 from odoo import models, fields, api
-from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 
 class Jemaat(models.Model):
     """
     Inherit res.partner
-    to full fill Jemaat base information's
+    to fulfill Jemaat base information's
     """
-    _inherit = 'res.partner'
+    _name = 'res.partner'
+    _inherit = ['res.partner', 'gbi.base.document']
+
+    _rec_seq_fields_name = {
+        'jemaat_number': 'app.jemaat.seq'
+    }
 
     is_jemaat = fields.Boolean(string='Jemaat', help='True if Partner is Jemaat')
     no_ktp = fields.Char(string='No KTP')
@@ -31,8 +35,6 @@ class Jemaat(models.Model):
         for rec in self:
             if rec.pekerjaan not in ['tidak bekerja', 'lain-lain']:
                 rec.function = rec.pekerjaan
-
-    # TODO: Create Umur computed (?)
 
     pekerjaan = fields.Selection([
         ('tidak bekerja', 'Tidak Bekerja'),
@@ -60,25 +62,44 @@ class Jemaat(models.Model):
     ], string='Golongan Darah')
     gereja_id = fields.Many2one(comodel_name='gereja', string='Gereja', ondelete='restrict', index=True, required=True,
                                 tracking=True)
-    is_baptis = fields.Boolean(string='Sudah dibaptis', default=False)
+    is_baptis = fields.Boolean(string='Sudah dibaptis', compute='_compute_baptisan')
     is_baptis_roh_kudus = fields.Boolean(string='Sudah dibaptis Roh Kudus', default=False)
     is_ayah_jemaat = fields.Boolean(string='Apakah Ayah Jemaat?', related='ayah_jemaat_id.is_jemaat')
-    ayah_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Ayah', tracking=True)
-    ibu_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Ibu', tracking=True)
+    ayah_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Ayah', tracking=True,
+                                     domain=[('company_type', '=', 'person')])
+    ibu_jemaat_id = fields.Many2one(comodel_name='res.partner', string='Ibu', tracking=True,
+                                    domain=[('company_type', '=', 'person')])
     is_ibu_jemaat = fields.Boolean(string='Apakah Ibu Jemaat?', related='ibu_jemaat_id.is_jemaat')
 
-    baptisan_id = fields.Many2one(comodel_name='baptisan', string='Nomor Baptisan', ondelete='set null', default=False)
+    baptisan_id = fields.Many2one(comodel_name='baptisan', string='Nomor Baptisan', compute='_compute_baptisan')
     kkj_id = fields.Many2one(comodel_name='kartu.keluarga.jemaat', string='Nomor KKJ', ondelete='set null',
                              default=False)
 
-    pengerja_line_id = fields.One2many(comodel_name='pengerja', inverse_name='partner_id', string='Nama Jemaat')
-    pengerja_count = fields.Float(compute='_compute_pengerja_count')
+    pengerja_id = fields.Many2one(comodel_name='pengerja', string='Pengerja', compute='_compute_pengerja')
     cool_line_id = fields.One2many(comodel_name='cool.anggota', inverse_name='jemaat_id', string='Nama Jemaat')
     cool_doa_line_id = fields.One2many(comodel_name='cool.kubu.doa', inverse_name='jemaat_id', string='Nama Jemaat')
 
     # Address Information
     full_address = fields.Char(string='Alamat', help='display the full address',
                                compute='_compute_address')
+
+    def _compute_pengerja(self):
+        pengerja_records = self.env['pengerja'].search([('partner_id', 'in', self.ids), ('state', '=', 'confirm')])
+
+        pengerja_map = {p.partner_id.id: p for p in pengerja_records}
+        for rec in self:
+            pengerja = pengerja_map.get(rec.id, False)
+            rec.pengerja_id = pengerja.id if pengerja else False
+
+    def _compute_baptisan(self):
+        # Fetch single query
+        baptisan_records = self.env['baptisan'].search([('nama_jemaat_id', 'in', self.ids), ('state', '=', 'confirm')])
+
+        baptism_map = {b.nama_jemaat_id.id: b for b in baptisan_records}
+        for rec in self:
+            baptisan = baptism_map.get(rec.id, False)
+            rec.baptisan_id = baptisan.id if baptisan else False
+            rec.is_baptis = bool(baptisan)
 
     def _compute_address(self):
         for rec in self:
@@ -92,23 +113,6 @@ class Jemaat(models.Model):
         ('nomor_uniq', 'unique (jemaat_number)', "Jemaat Number already exists !"),
     ]
 
-    def _compute_pengerja_count(self):
-        self.pengerja_count = len(self.pengerja_line_id)
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if 'company_id' in vals:
-                self = self.with_company(vals['company_id'])
-            if vals.get('jemaat_number', _("New")) == _("New"):
-                seq_date = fields.Datetime.context_timestamp(
-                    self, fields.Datetime.to_datetime(vals['create_date'])
-                ) if 'create_date' in vals else None
-                vals['jemaat_number'] = self.env['ir.sequence'].next_by_code(
-                    'app.jemaat.seq', sequence_date=seq_date) or _("New")
-
-        return super().create(vals_list)
-
     def _prepare_pengerja_vals(self):
         return {
             'partner_id': self.id,
@@ -121,7 +125,7 @@ class Jemaat(models.Model):
         return self.env['pengerja'].create(vals)
 
     def action_create_pengerja(self):
-        if not self.pengerja_line_id:
+        if not self.baptisan_id:
             pengerja_id = self._action_create_pengerja()
             action = self.env["ir.actions.actions"]._for_xml_id("custom_addons.pengerja_action")
             action.update({
@@ -129,6 +133,30 @@ class Jemaat(models.Model):
                 'view_mode': 'form',
                 'target': 'current',
                 'res_id': pengerja_id.id,
+            })
+            return action
+        return False
+
+    def action_open_pengerja(self):
+        if self.pengerja_id:
+            action = self.env["ir.actions.actions"]._for_xml_id("custom_addons.pengerja_action")
+            action.update({
+                'views': [[self.env.ref('custom_addons.pengerja_view_form').id, 'form']],
+                'view_mode': 'form',
+                'target': 'current',
+                'res_id': self.pengerja_id.id,
+            })
+            return action
+        return False
+
+    def action_open_baptis(self):
+        if self.baptisan_id:
+            action = self.env["ir.actions.actions"]._for_xml_id("custom_addons.baptisan_action")
+            action.update({
+                'views': [[self.env.ref('custom_addons.baptisan_view_form').id, 'form']],
+                'view_mode': 'form',
+                'target': 'current',
+                'res_id': self.baptisan_id.id,
             })
             return action
         return False
